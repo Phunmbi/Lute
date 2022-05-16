@@ -1,0 +1,40 @@
+{
+  "name": "lute-server",
+  "version": "0.0.1",
+  "description": "GraphQL based Node server for lute-client.",
+  "main": "dist/index.js",
+  "repository": "https://github.com/Phunmbi/Lute.git",
+  "author": "Adeniyi Adeyokunnu <funmbi.adeyokunnu@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "type": "commonjs",
+  "devDependencies": {
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/typescript": "2.4.11",
+    "@graphql-codegen/typescript-resolvers": "2.6.4",
+    "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^5.24.0",
+    "@typescript-eslint/parser": "^5.24.0",
+    "concurrently": "^7.2.0",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "graphql": "^16.5.0",
+    "nodemon": "^2.0.16",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.4"
+  },
+  "scripts": {
+    "dev": "yarn concurrently 'yarn nodemon' 'tsc --watch --preserveWatchOutput' -n node,ts",
+    "build": "tsc -p .",
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "@graphql-tools/graphql-file-loader": "^7.3.12",
+    "@graphql-tools/load": "^7.5.11",
+    "@graphql-tools/schema": "^8.3.11",
+    "apollo-server-core": "^3.7.0",
+    "apollo-server-express": "^3.7.0",
+    "express": "^4.18.1"
+  }
+}

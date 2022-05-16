@@ -1,0 +1,57 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+	query: Query
+	mutation: Mutation
+}
+
+type Address {
+	city: String!
+	country: String!
+	street: String!
+	zip: String!
+}
+
+type Mutation {
+	createOrder(orderRequest: OrderRequestBody): OrderResponse
+}
+
+type OrderResponse {
+	address: Address!
+	bookingDate: Date!
+	customer: User!
+	title: String!
+	uid: String!
+}
+
+scalar Date
+
+type Query {
+	getOrder(id: String!): OrderResponse
+}
+
+type User {
+	email: String!
+	name: String!
+	phone: String!
+}
+
+input AddressInput {
+	city: String!
+	country: String!
+	street: String!
+	zip: String!
+}
+
+input OrderRequestBody {
+	Customer: UserInput!
+	address: AddressInput!
+	bookingDate: Date!
+	title: String!
+}
+
+input UserInput {
+	email: String!
+	name: String!
+	phone: String!
+}
