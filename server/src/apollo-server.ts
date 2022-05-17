@@ -5,7 +5,7 @@ import { loadSchemaSync } from "@graphql-tools/load"
 import { addResolversToSchema } from "@graphql-tools/schema"
 import  express from "express"
 import { Server } from "http"
-import resolvers from "./resolvers";
+import resolvers, {ResolverContext} from "./resolvers";
 import { firestore} from "firebase-admin";
 import Firestore = firestore.Firestore;
 
@@ -23,7 +23,7 @@ export async function createApolloServer(
 		schema: addResolversToSchema({
 			schema: SCHEMA, resolvers
 		}),
-		context: () => ({ db }),
+		context: ():ResolverContext => ({ db }),
 		plugins: [
 			ApolloServerPluginDrainHttpServer({ httpServer }),
 		],
