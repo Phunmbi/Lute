@@ -6,6 +6,8 @@ import { addResolversToSchema } from "@graphql-tools/schema"
 import  express from "express"
 import { Server } from "http"
 import resolvers from "./resolvers";
+import { firestore} from "firebase-admin";
+import Firestore = firestore.Firestore;
 
 const GRAPHQL_SCHEMA_PATH = '../schema.graphql'
 const SCHEMA = loadSchemaSync(GRAPHQL_SCHEMA_PATH, {
@@ -13,7 +15,7 @@ const SCHEMA = loadSchemaSync(GRAPHQL_SCHEMA_PATH, {
 })
 
 export async function createApolloServer(
-	db: String,
+	db: Firestore,
 	httpServer: Server,
 	app: express.Application
 ): Promise<ApolloServer<ExpressContext>> {
