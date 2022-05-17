@@ -12,7 +12,7 @@ const OrdersService = (db: Firestore) => {
 			let orderDoc = await orderDocRef.get();
 			
 			if (!orderDoc.exists) {
-				throw new Error("Document does not exist")
+				throw new Error(`Order ${id} does not exist`)
 			} else {
 				const respData = {...orderDoc.data(), uid: id}
 				return respData as OrderResponse
