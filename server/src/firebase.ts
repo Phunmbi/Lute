@@ -1,11 +1,10 @@
-import admin, {ServiceAccount} from 'firebase-admin';
+import {credential, firestore, initializeApp, ServiceAccount} from 'firebase-admin';
 import serviceAccount from '../../serviceAccountKey.json';
+import Firestore = firestore.Firestore;
 
-admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount as ServiceAccount),
+initializeApp({
+	credential: credential.cert(serviceAccount as ServiceAccount),
 	databaseURL: 'https://construyo-coding-challenge.firebaseio.com',
 });
 
-export const db = admin.firestore();
-
-export default admin;
+export const db: Firestore = firestore();

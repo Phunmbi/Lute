@@ -27,7 +27,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "yarn tsc -p .",
-    "start": "node build/src/index.js",
+    "start": "node build/server/src/index.js",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
