@@ -20,5 +20,13 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    'import/extensions': 'off',
+    'import/no-unresolved': 'off',
+    'no-tabs': 'off',
+    'react/jsx-filename-extension': 'off',
+    'no-fragments': 'off',
   },
 };

@@ -1,12 +1,14 @@
-import React, {FC} from "react";
-import Sidebar from "./Sidebar";
+import React from 'react';
+import Sidebar from './Sidebar';
+import Main from './Main';
 
-const Layout = () => {
-	return (
-		<div>
-			<Sidebar></Sidebar>
-		</div>
-	)
+function Layout() {
+  return (
+    <div>
+      <Sidebar />
+      <Main />
+    </div>
+  );
 }
 
 export default Layout;
