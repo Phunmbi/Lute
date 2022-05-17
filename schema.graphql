@@ -24,8 +24,6 @@ type OrderResponse {
 	uid: String!
 }
 
-scalar Date
-
 type Query {
 	getOrder(id: String!): OrderResponse
 }
@@ -35,6 +33,8 @@ type User {
 	name: String!
 	phone: String!
 }
+
+scalar Date
 
 input AddressInput {
 	city: String!

@@ -1,9 +1,10 @@
-import {orders} from "../../localdb";
 import {QueryResolvers} from "../code_generated";
+import OrdersService from "../../services/orders";
+import {ResolverContext} from "../../resolvers";
 
-const queryOrderResolver: QueryResolvers = {
-	getOrder: () => {
-		return orders[0]
+const queryOrderResolver: QueryResolvers<ResolverContext> = {
+	getOrder: async (_, {id}, {db}) => {
+		return OrdersService(db).getOrder(id);
 	}
 }
 

@@ -83,7 +83,7 @@ typings/
 # Nuxt.js build / generate output
 .nuxt
 dist
-./server/dist
+/server/build
 
 # Gatsby files
 .cache/
@@ -107,3 +107,4 @@ dist
 .tern-port
 
 .idea
+/server/serviceAccountKey.json

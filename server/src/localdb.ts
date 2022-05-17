@@ -1,4 +1,5 @@
-export const orders = [{
+export const orders = [
+	{
 	"address": {
 		"city": "Berlin",
 		"country": "Germany",
@@ -13,6 +14,23 @@ export const orders = [{
 	},
 	"title": "Test Order 1",
 	"uid": "hKlIKPoZc2xCKGTUKZK2"
+}]
+
+export const inputOrder = [{
+	"address": {
+		"city": "Abuja",
+		"country": "Nigeria",
+		"street": "4 Sam nujoma Asokoro",
+		"zip": "900231"
+	},
+	"bookingDate": 1554284950000,
+	"customer": {
+		"email": "phunmbi@gmail.com",
+		"name": "Adeniyi Funmbi",
+		"phone": "080678777777"
+	},
+	"title": "Test Order 1",
+	// "uid": "CeAmCcbx0JJ5QNWgFTDW"
 }]
 
 export const user = {
