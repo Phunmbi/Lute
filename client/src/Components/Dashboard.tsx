@@ -1,30 +1,12 @@
 import React from 'react';
-import { gql } from '@apollo/client';
 import { GetSingleOrderQueryHookResult, useGetSingleOrderQuery } from '../graphql/generated';
 
-export const GET_SINGLE_ORDER = gql`
-	query GetSingleOrder {
-		getOrder(id: "CeAmCcbx0JJ5QNWgFTDW") {
-			title
-			customer {
-				name
-				email
-				phone
-			}
-			uid
-			bookingDate
-			address {
-				city
-				zip
-				street
-				country
-			}
-		}
-	}
-`;
-
 function Dashboard() {
-  const { loading, error, data }: GetSingleOrderQueryHookResult = useGetSingleOrderQuery();
+  const {
+    loading,
+    error,
+    data,
+  }: GetSingleOrderQueryHookResult = useGetSingleOrderQuery({ variables: { id: 'CeAmCcbx0JJ5QNWgFTDW' } });
 
   return (
     <>

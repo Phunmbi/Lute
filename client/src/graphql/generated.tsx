@@ -80,15 +80,17 @@ export type UserInput = {
   phone: Scalars['String'];
 };
 
-export type GetSingleOrderQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSingleOrderQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
 
 
 export type GetSingleOrderQuery = { __typename?: 'Query', getOrder?: { __typename?: 'OrderResponse', title: string, uid: string, bookingDate: any, customer: { __typename?: 'User', name: string, email: string, phone: string }, address: { __typename?: 'Address', city: string, zip: string, street: string, country: string } } | null };
 
 
 export const GetSingleOrderDocument = gql`
-    query GetSingleOrder {
-  getOrder(id: "CeAmCcbx0JJ5QNWgFTDW") {
+    query GetSingleOrder($id: String!) {
+  getOrder(id: $id) {
     title
     customer {
       name
@@ -119,10 +121,11 @@ export const GetSingleOrderDocument = gql`
  * @example
  * const { data, loading, error } = useGetSingleOrderQuery({
  *   variables: {
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetSingleOrderQuery(baseOptions?: Apollo.QueryHookOptions<GetSingleOrderQuery, GetSingleOrderQueryVariables>) {
+export function useGetSingleOrderQuery(baseOptions: Apollo.QueryHookOptions<GetSingleOrderQuery, GetSingleOrderQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetSingleOrderQuery, GetSingleOrderQueryVariables>(GetSingleOrderDocument, options);
       }
