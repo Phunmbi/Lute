@@ -15,7 +15,8 @@
     "build": "yarn build-server && yarn build-client",
     "start-client": "cd client && yarn start",
     "dev-server": "cd server && yarn dev",
-    "dev": "yarn concurrently 'yarn:dev-server' 'yarn:start-client'",
+    "dev-client": "cd client && yarn dev",
+    "dev": "yarn concurrently 'yarn:dev-server' 'yarn:dev-client'",
     "start-server": "cd server && yarn start",
     "start": "yarn concurrently yarn:start-server yarn:start-client "
   },
