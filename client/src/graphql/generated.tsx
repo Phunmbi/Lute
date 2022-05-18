@@ -34,10 +34,17 @@ export type AddressInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createOrder: OrderResponse;
+  updateOrder: OrderResponse;
 };
 
 
 export type MutationCreateOrderArgs = {
+  orderRequest: OrderRequestBody;
+};
+
+
+export type MutationUpdateOrderArgs = {
+  id: Scalars['String'];
   orderRequest: OrderRequestBody;
 };
 

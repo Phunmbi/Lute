@@ -33,10 +33,17 @@ export type AddressInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createOrder: OrderResponse;
+  updateOrder: OrderResponse;
 };
 
 
 export type MutationCreateOrderArgs = {
+  orderRequest: OrderRequestBody;
+};
+
+
+export type MutationUpdateOrderArgs = {
+  id: Scalars['String'];
   orderRequest: OrderRequestBody;
 };
 
@@ -191,6 +198,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createOrder?: Resolver<ResolversTypes['OrderResponse'], ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'orderRequest'>>;
+  updateOrder?: Resolver<ResolversTypes['OrderResponse'], ParentType, ContextType, RequireFields<MutationUpdateOrderArgs, 'id' | 'orderRequest'>>;
 };
 
 export type OrderResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['OrderResponse'] = ResolversParentTypes['OrderResponse']> = {

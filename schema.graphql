@@ -14,6 +14,7 @@ type Address {
 
 type Mutation {
 	createOrder(orderRequest: OrderRequestBody!): OrderResponse!
+	updateOrder(id: String!, orderRequest: OrderRequestBody!): OrderResponse!
 }
 
 type OrderResponse {

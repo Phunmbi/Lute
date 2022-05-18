@@ -1,52 +1,77 @@
 import {firestore} from 'firebase-admin';
-import {MutationCreateOrderArgs, OrderResponse, QueryOrderArgs} from '../graphql/code_generated';
-import {orderTransform} from "../transform/orderTransform";
+import {
+	MutationCreateOrderArgs,
+	MutationUpdateOrderArgs,
+	OrderResponse,
+	QueryOrderArgs
+} from '../graphql/code_generated';
+import {cleanDataTrans, orderTransform} from "../transform/orderTransform";
 import Firestore = firestore.Firestore;
 
 const OrdersService = (db: Firestore) => {
-	const getOrder = async ({id}: QueryOrderArgs) => {
-		const orderDocRef = db.collection('orders').doc(id);
-		// await orderDocRef.set(inputOrder[0], {merge: true})
-		const orderDoc = await orderDocRef.get();
-		const data = orderDoc.data();
+	const getOrder = async (args: QueryOrderArgs): Promise<OrderResponse> => {
+		const ordersDoc = db.collection('orders').doc(args.id);
+		const orderDocSnap = await ordersDoc.get();
+		const data = orderDocSnap.data()
 		
-		if (orderDoc.exists && orderDoc.data()) {
-			return orderTransform({...data, uid: id})
+		if (orderDocSnap.exists && data) {
+			return orderTransform({...data, uid: args.id})
 		} else {
-			throw new Error(`Order ${id} does not exist`);
+			throw new Error(`Could not find order`)
 		}
 	};
 	
 	const getAllOrders = async () => {
 		const orderColl = db.collection('orders')
 		const orderCollSnap = await orderColl.get();
-		const transOrders: OrderResponse[] = []
 		
-		orderCollSnap.forEach(doc => {
-			const data = doc.data()
-			const parsOrd = orderTransform({...data, uid: doc.id})
-			transOrders.push(parsOrd)
-		})
-		
-		return transOrders;
+		return cleanDataTrans(orderTransform, orderCollSnap)
 	}
 	
 	const createOrder = async ({orderRequest}: MutationCreateOrderArgs) => {
-		const {bookingDate, title, customer, address} = orderRequest
 		const newDocRef = db.collection('orders').doc();
-		await newDocRef.set({bookingDate, title, customer, address})
+		await newDocRef.set({...orderRequest})
 		
 		const retrieveSavedDoc = await newDocRef.get()
 		const data = retrieveSavedDoc.data()
 		
 		if (!data) throw new Error(`Failed to save order`)
-		return orderTransform(data)
+		return orderTransform({...data, uid: newDocRef.id})
 	}
+	
+	const updateOrder = async ({id, orderRequest}: MutationUpdateOrderArgs) => {
+		const orderDocR = db.collection('orders').doc(id);
+		const orderD = await orderDocR.get()
+		const dataBefUpd = orderD.data()
+		
+		if (!orderD.exists || !dataBefUpd) throw new Error('Order to be updated does not exist')
+		
+		const updateObj = {
+			...orderRequest,
+			customer: {
+				...dataBefUpd.customer,
+				...orderRequest.customer,
+			},
+			address: {
+				...dataBefUpd.address,
+				...orderRequest.address,
+			}
+		}
+		
+		await orderDocR.update({...updateObj})
+		const retrieveSavedDoc = await orderDocR.get()
+		const updatedData = retrieveSavedDoc.data()
+		
+		if (!retrieveSavedDoc.exists || !updatedData) throw new Error('Error fetching updated order')
+		
+		return orderTransform({...updatedData, uid: id})
+	};
 	
 	return {
 		getOrder: getOrder,
 		createOrder: createOrder,
-		getAllOrders: getAllOrders
+		getAllOrders: getAllOrders,
+		updateOrder: updateOrder
 	};
 };
 

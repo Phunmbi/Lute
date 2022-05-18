@@ -6,6 +6,10 @@ const mutationOrderResolver: MutationResolvers<ResolverContext> = {
 	createOrder: async (_, args: MutationCreateOrderArgs, context: ResolverContext) => {
 		return OrdersService(context.db).createOrder(args)
 	},
+	
+	updateOrder: async (_, args, context: ResolverContext) => {
+		return OrdersService(context.db).updateOrder(args)
+	},
 };
 
 export default mutationOrderResolver;
