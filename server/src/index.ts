@@ -3,7 +3,8 @@ import {createServer} from 'http';
 import createApolloServer from './apollo-server';
 import {db} from './firebase';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
+require('dotenv').config()
+
 const app: Express = express();
 const port = 4000 || process.env.PORT;
 
