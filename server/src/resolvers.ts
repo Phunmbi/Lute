@@ -1,6 +1,6 @@
-import Query from "./graphql/resolvers/Query";
-import {Resolvers} from "./graphql/code_generated";
-import {firestore} from "firebase-admin";
+import { firestore } from 'firebase-admin';
+import Query from './graphql/resolvers/Query';
+import { Resolvers } from './graphql/code_generated';
 import Firestore = firestore.Firestore;
 
 export interface ResolverContext {
@@ -8,7 +8,7 @@ export interface ResolverContext {
 }
 
 const resolvers: Resolvers<ResolverContext> = {
-	Query
-}
+  Query,
+};
 
 export default resolvers;
