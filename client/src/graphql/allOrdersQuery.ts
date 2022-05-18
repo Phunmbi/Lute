@@ -1,8 +1,8 @@
 import {gql} from '@apollo/client';
 
 const GET_SINGLE_ORDER = gql`
-	query GetSingleOrder($id: String!) {
-		order(id: $id) {
+	query GetAllOrder{
+		allOrders {
 			title
 			customer {
 				name

@@ -6,52 +6,53 @@ schema {
 }
 
 type Address {
-	city: String!
-	country: String!
-	street: String!
-	zip: String!
+	city: String
+	country: String
+	street: String
+	zip: String
 }
 
 type Mutation {
-	createOrder(orderRequest: OrderRequestBody): OrderResponse
+	createOrder(orderRequest: OrderRequestBody!): OrderResponse!
 }
 
 type OrderResponse {
-	address: Address!
-	bookingDate: Date!
-	customer: User!
-	title: String!
+	address: Address
+	bookingDate: Date
+	customer: User
+	title: String
 	uid: String!
 }
 
 type Query {
-	getOrder(id: String!): OrderResponse
+	order(id: String!): OrderResponse
+	allOrders: [OrderResponse!]
 }
 
 type User {
-	email: String!
-	name: String!
-	phone: String!
+	email: String
+	name: String
+	phone: String
 }
 
 scalar Date
 
 input AddressInput {
-	city: String!
-	country: String!
-	street: String!
-	zip: String!
+	city: String
+	country: String
+	street: String
+	zip: String
 }
 
 input OrderRequestBody {
-	Customer: UserInput!
-	address: AddressInput!
-	bookingDate: Date!
-	title: String!
+	customer: UserInput
+	address: AddressInput
+	bookingDate: Date
+	title: String
 }
 
 input UserInput {
-	email: String!
-	name: String!
-	phone: String!
+	email: String
+	name: String
+	phone: String
 }

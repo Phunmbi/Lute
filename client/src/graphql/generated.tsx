@@ -18,79 +18,132 @@ export type Scalars = {
 
 export type Address = {
   __typename?: 'Address';
-  city: Scalars['String'];
-  country: Scalars['String'];
-  street: Scalars['String'];
-  zip: Scalars['String'];
+  city?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  street?: Maybe<Scalars['String']>;
+  zip?: Maybe<Scalars['String']>;
 };
 
 export type AddressInput = {
-  city: Scalars['String'];
-  country: Scalars['String'];
-  street: Scalars['String'];
-  zip: Scalars['String'];
+  city?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  street?: InputMaybe<Scalars['String']>;
+  zip?: InputMaybe<Scalars['String']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createOrder?: Maybe<OrderResponse>;
+  createOrder: OrderResponse;
 };
 
 
 export type MutationCreateOrderArgs = {
-  orderRequest?: InputMaybe<OrderRequestBody>;
+  orderRequest: OrderRequestBody;
 };
 
 export type OrderRequestBody = {
-  Customer: UserInput;
-  address: AddressInput;
-  bookingDate: Scalars['Date'];
-  title: Scalars['String'];
+  address?: InputMaybe<AddressInput>;
+  bookingDate?: InputMaybe<Scalars['Date']>;
+  customer?: InputMaybe<UserInput>;
+  title?: InputMaybe<Scalars['String']>;
 };
 
 export type OrderResponse = {
   __typename?: 'OrderResponse';
-  address: Address;
-  bookingDate: Scalars['Date'];
-  customer: User;
-  title: Scalars['String'];
+  address?: Maybe<Address>;
+  bookingDate?: Maybe<Scalars['Date']>;
+  customer?: Maybe<User>;
+  title?: Maybe<Scalars['String']>;
   uid: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  getOrder?: Maybe<OrderResponse>;
+  allOrders?: Maybe<Array<OrderResponse>>;
+  order?: Maybe<OrderResponse>;
 };
 
 
-export type QueryGetOrderArgs = {
+export type QueryOrderArgs = {
   id: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
-  email: Scalars['String'];
-  name: Scalars['String'];
-  phone: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
 };
 
 export type UserInput = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  phone: Scalars['String'];
+  email?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
+
+export type GetAllOrderQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllOrderQuery = { __typename?: 'Query', allOrders?: Array<{ __typename?: 'OrderResponse', title?: string | null, uid: string, bookingDate?: any | null, customer?: { __typename?: 'User', name?: string | null, email?: string | null, phone?: string | null } | null, address?: { __typename?: 'Address', city?: string | null, zip?: string | null, street?: string | null, country?: string | null } | null }> | null };
 
 export type GetSingleOrderQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetSingleOrderQuery = { __typename?: 'Query', getOrder?: { __typename?: 'OrderResponse', title: string, uid: string, bookingDate: any, customer: { __typename?: 'User', name: string, email: string, phone: string }, address: { __typename?: 'Address', city: string, zip: string, street: string, country: string } } | null };
+export type GetSingleOrderQuery = { __typename?: 'Query', order?: { __typename?: 'OrderResponse', title?: string | null, uid: string, bookingDate?: any | null, customer?: { __typename?: 'User', name?: string | null, email?: string | null, phone?: string | null } | null, address?: { __typename?: 'Address', city?: string | null, zip?: string | null, street?: string | null, country?: string | null } | null } | null };
 
 
+export const GetAllOrderDocument = gql`
+    query GetAllOrder {
+  allOrders {
+    title
+    customer {
+      name
+      email
+      phone
+    }
+    uid
+    bookingDate
+    address {
+      city
+      zip
+      street
+      country
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllOrderQuery__
+ *
+ * To run a query within a React component, call `useGetAllOrderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllOrderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllOrderQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllOrderQuery(baseOptions?: Apollo.QueryHookOptions<GetAllOrderQuery, GetAllOrderQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllOrderQuery, GetAllOrderQueryVariables>(GetAllOrderDocument, options);
+      }
+export function useGetAllOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllOrderQuery, GetAllOrderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllOrderQuery, GetAllOrderQueryVariables>(GetAllOrderDocument, options);
+        }
+export type GetAllOrderQueryHookResult = ReturnType<typeof useGetAllOrderQuery>;
+export type GetAllOrderLazyQueryHookResult = ReturnType<typeof useGetAllOrderLazyQuery>;
+export type GetAllOrderQueryResult = Apollo.QueryResult<GetAllOrderQuery, GetAllOrderQueryVariables>;
 export const GetSingleOrderDocument = gql`
     query GetSingleOrder($id: String!) {
-  getOrder(id: $id) {
+  order(id: $id) {
     title
     customer {
       name

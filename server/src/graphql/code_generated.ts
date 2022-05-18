@@ -17,66 +17,67 @@ export type Scalars = {
 
 export type Address = {
   __typename?: 'Address';
-  city: Scalars['String'];
-  country: Scalars['String'];
-  street: Scalars['String'];
-  zip: Scalars['String'];
+  city?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  street?: Maybe<Scalars['String']>;
+  zip?: Maybe<Scalars['String']>;
 };
 
 export type AddressInput = {
-  city: Scalars['String'];
-  country: Scalars['String'];
-  street: Scalars['String'];
-  zip: Scalars['String'];
+  city?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  street?: InputMaybe<Scalars['String']>;
+  zip?: InputMaybe<Scalars['String']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createOrder?: Maybe<OrderResponse>;
+  createOrder: OrderResponse;
 };
 
 
 export type MutationCreateOrderArgs = {
-  orderRequest?: InputMaybe<OrderRequestBody>;
+  orderRequest: OrderRequestBody;
 };
 
 export type OrderRequestBody = {
-  Customer: UserInput;
-  address: AddressInput;
-  bookingDate: Scalars['Date'];
-  title: Scalars['String'];
+  address?: InputMaybe<AddressInput>;
+  bookingDate?: InputMaybe<Scalars['Date']>;
+  customer?: InputMaybe<UserInput>;
+  title?: InputMaybe<Scalars['String']>;
 };
 
 export type OrderResponse = {
   __typename?: 'OrderResponse';
-  address: Address;
-  bookingDate: Scalars['Date'];
-  customer: User;
-  title: Scalars['String'];
+  address?: Maybe<Address>;
+  bookingDate?: Maybe<Scalars['Date']>;
+  customer?: Maybe<User>;
+  title?: Maybe<Scalars['String']>;
   uid: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  getOrder?: Maybe<OrderResponse>;
+  allOrders?: Maybe<Array<OrderResponse>>;
+  order?: Maybe<OrderResponse>;
 };
 
 
-export type QueryGetOrderArgs = {
+export type QueryOrderArgs = {
   id: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
-  email: Scalars['String'];
-  name: Scalars['String'];
-  phone: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
 };
 
 export type UserInput = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  phone: Scalars['String'];
+  email?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -177,10 +178,10 @@ export type ResolversParentTypes = {
 };
 
 export type AddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['Address'] = ResolversParentTypes['Address']> = {
-  city?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  country?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  street?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  zip?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  street?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  zip?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -189,26 +190,27 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createOrder?: Resolver<Maybe<ResolversTypes['OrderResponse']>, ParentType, ContextType, Partial<MutationCreateOrderArgs>>;
+  createOrder?: Resolver<ResolversTypes['OrderResponse'], ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'orderRequest'>>;
 };
 
 export type OrderResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['OrderResponse'] = ResolversParentTypes['OrderResponse']> = {
-  address?: Resolver<ResolversTypes['Address'], ParentType, ContextType>;
-  bookingDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  customer?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  address?: Resolver<Maybe<ResolversTypes['Address']>, ParentType, ContextType>;
+  bookingDate?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
+  customer?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   uid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getOrder?: Resolver<Maybe<ResolversTypes['OrderResponse']>, ParentType, ContextType, RequireFields<QueryGetOrderArgs, 'id'>>;
+  allOrders?: Resolver<Maybe<Array<ResolversTypes['OrderResponse']>>, ParentType, ContextType>;
+  order?: Resolver<Maybe<ResolversTypes['OrderResponse']>, ParentType, ContextType, RequireFields<QueryOrderArgs, 'id'>>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  phone?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
