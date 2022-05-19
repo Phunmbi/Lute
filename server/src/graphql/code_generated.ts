@@ -30,6 +30,20 @@ export type AddressInput = {
   zip?: InputMaybe<Scalars['String']>;
 };
 
+export type AllOrdersResponse = {
+  __typename?: 'AllOrdersResponse';
+  count?: Maybe<Scalars['Int']>;
+  cursor?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  orders?: Maybe<Array<OrderResponse>>;
+};
+
+export type Edge = {
+  __typename?: 'Edge';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<OrderResponse>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createOrder: OrderResponse;
@@ -63,10 +77,33 @@ export type OrderResponse = {
   uid: Scalars['String'];
 };
 
+export type OrdersConnection = {
+  __typename?: 'OrdersConnection';
+  edges?: Maybe<Array<Maybe<Edge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor: Scalars['String'];
+  hasNextPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean'];
+  startCursor: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
-  allOrders?: Maybe<Array<OrderResponse>>;
+  allOrders?: Maybe<OrdersConnection>;
   order?: Maybe<OrderResponse>;
+};
+
+
+export type QueryAllOrdersArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -158,11 +195,16 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Address: ResolverTypeWrapper<Address>;
   AddressInput: AddressInput;
+  AllOrdersResponse: ResolverTypeWrapper<AllOrdersResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Edge: ResolverTypeWrapper<Edge>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   OrderRequestBody: OrderRequestBody;
   OrderResponse: ResolverTypeWrapper<OrderResponse>;
+  OrdersConnection: ResolverTypeWrapper<OrdersConnection>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
@@ -173,11 +215,16 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Address: Address;
   AddressInput: AddressInput;
+  AllOrdersResponse: AllOrdersResponse;
   Boolean: Scalars['Boolean'];
   Date: Scalars['Date'];
+  Edge: Edge;
+  Int: Scalars['Int'];
   Mutation: {};
   OrderRequestBody: OrderRequestBody;
   OrderResponse: OrderResponse;
+  OrdersConnection: OrdersConnection;
+  PageInfo: PageInfo;
   Query: {};
   String: Scalars['String'];
   User: User;
@@ -192,9 +239,23 @@ export type AddressResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type AllOrdersResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['AllOrdersResponse'] = ResolversParentTypes['AllOrdersResponse']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  cursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  limit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  orders?: Resolver<Maybe<Array<ResolversTypes['OrderResponse']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
+
+export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = {
+  cursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  node?: Resolver<Maybe<ResolversTypes['OrderResponse']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createOrder?: Resolver<ResolversTypes['OrderResponse'], ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'orderRequest'>>;
@@ -210,8 +271,23 @@ export type OrderResponseResolvers<ContextType = any, ParentType extends Resolve
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type OrdersConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['OrdersConnection'] = ResolversParentTypes['OrdersConnection']> = {
+  edges?: Resolver<Maybe<Array<Maybe<ResolversTypes['Edge']>>>, ParentType, ContextType>;
+  pageInfo?: Resolver<Maybe<ResolversTypes['PageInfo']>, ParentType, ContextType>;
+  totalCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
+  endCursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  hasPreviousPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  startCursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  allOrders?: Resolver<Maybe<Array<ResolversTypes['OrderResponse']>>, ParentType, ContextType>;
+  allOrders?: Resolver<Maybe<ResolversTypes['OrdersConnection']>, ParentType, ContextType, Partial<QueryAllOrdersArgs>>;
   order?: Resolver<Maybe<ResolversTypes['OrderResponse']>, ParentType, ContextType, RequireFields<QueryOrderArgs, 'id'>>;
 };
 
@@ -224,9 +300,13 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Address?: AddressResolvers<ContextType>;
+  AllOrdersResponse?: AllOrdersResponseResolvers<ContextType>;
   Date?: GraphQLScalarType;
+  Edge?: EdgeResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   OrderResponse?: OrderResponseResolvers<ContextType>;
+  OrdersConnection?: OrdersConnectionResolvers<ContextType>;
+  PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

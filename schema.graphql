@@ -5,11 +5,9 @@ schema {
 	mutation: Mutation
 }
 
-type Address {
-	city: String
-	country: String
-	street: String
-	zip: String
+type Query {
+	order(id: String!): OrderResponse
+	allOrders(first: Int, last: Int, after:String, before: String): OrdersConnection
 }
 
 type Mutation {
@@ -25,9 +23,43 @@ type OrderResponse {
 	uid: String!
 }
 
-type Query {
-	order(id: String!): OrderResponse
-	allOrders: [OrderResponse!]
+input OrderRequestBody {
+	customer: UserInput
+	address: AddressInput
+	bookingDate: Date
+	title: String
+}
+
+type AllOrdersResponse {
+	count: Int
+	limit: Int
+	cursor: String
+	orders: [OrderResponse!]
+}
+
+type OrdersConnection {
+	totalCount: Int
+	pageInfo: PageInfo
+	edges: [Edge]
+}
+
+type Edge {
+	node: OrderResponse,
+	cursor: String
+}
+
+type PageInfo {
+	hasNextPage: Boolean!
+	hasPreviousPage: Boolean!
+	startCursor: String!
+	endCursor: String!
+}
+
+type Address {
+	city: String
+	country: String
+	street: String
+	zip: String
 }
 
 type User {
@@ -36,8 +68,6 @@ type User {
 	phone: String
 }
 
-scalar Date
-
 input AddressInput {
 	city: String
 	country: String
@@ -45,15 +75,10 @@ input AddressInput {
 	zip: String
 }
 
-input OrderRequestBody {
-	customer: UserInput
-	address: AddressInput
-	bookingDate: Date
-	title: String
-}
-
 input UserInput {
 	email: String
 	name: String
 	phone: String
 }
+
+scalar Date

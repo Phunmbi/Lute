@@ -1,12 +1,29 @@
 import React from 'react';
-import {GetAllOrderQueryHookResult, OrderResponse, useGetAllOrderQuery} from '../graphql/generated';
+import {GetAllOrderQueryHookResult, useGetAllOrderQuery} from '../graphql/generated';
 
-function Dashboard() {
+const Dashboard = () => {
 	const {
 		loading,
 		error,
 		data,
-	}: GetAllOrderQueryHookResult = useGetAllOrderQuery();
+		fetchMore
+	}: GetAllOrderQueryHookResult = useGetAllOrderQuery({
+		variables: {
+			first: 10,
+		},
+		notifyOnNetworkStatusChange: true
+	});
+	
+	const pageInfo = data?.allOrders?.pageInfo;
+	
+	const handleNext = () => {
+		void fetchMore({
+			variables: {
+				first: 10,
+				after: pageInfo?.endCursor
+			}
+		})
+	}
 	
 	return (
 		<>
@@ -21,19 +38,23 @@ function Dashboard() {
 					<th>Booking Date</th>
 				</tr>
 				</thead>
-				{data && data.allOrders?.map((singleOrder: OrderResponse) => {
-					const parsedDate = new Date(singleOrder.bookingDate)
+				{data?.allOrders?.edges?.map((edge) => {
+					const singleOrder = edge?.node;
+					const parsedDate = new Date(singleOrder?.bookingDate)
 					return (
-						<tbody key={singleOrder.uid}>
+						<tbody key={singleOrder?.uid}>
 						<tr>
-							<th>{singleOrder.title}</th>
-							<th>{singleOrder.customer?.name}</th>
-							<th>{singleOrder.address?.country}</th>
+							<th>{singleOrder?.title}</th>
+							<th>{singleOrder?.customer?.name}</th>
+							<th>{singleOrder?.address?.country}</th>
 							<th>{parsedDate.toDateString()}</th>
 						</tr>
 						</tbody>)
 				})}
 			</table>
+			<div>
+				<button type="button" disabled={!pageInfo?.hasNextPage} onClick={() => handleNext()}>Load more</button>
+			</div>
 		</>
 	);
 }

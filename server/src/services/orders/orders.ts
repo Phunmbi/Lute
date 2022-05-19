@@ -3,34 +3,38 @@ import {
 	MutationCreateOrderArgs,
 	MutationUpdateOrderArgs,
 	OrderResponse,
+	OrdersConnection,
+	QueryAllOrdersArgs,
 	QueryOrderArgs
-} from '../graphql/code_generated';
-import {cleanDataTrans, orderTransform} from "../transform/orderTransform";
+} from '../../graphql/code_generated';
+import {orderTransform, paginateTransform} from "../../transform/orderTransform";
+import {applyCursorToEdges} from "./ordersHelpers";
 import Firestore = firestore.Firestore;
+import FieldValue = firestore.FieldValue;
+
 
 const OrdersService = (db: Firestore) => {
 	const getOrder = async (args: QueryOrderArgs): Promise<OrderResponse> => {
-		const ordersDoc = db.collection('orders').doc(args.id);
-		const orderDocSnap = await ordersDoc.get();
-		const data = orderDocSnap.data()
+		const ordersDoc = await db.collection('orders').doc(args.id).get();
+		const data = ordersDoc.data()
 		
-		if (orderDocSnap.exists && data) {
+		if (ordersDoc.exists && data) {
 			return orderTransform({...data, uid: args.id})
 		} else {
 			throw new Error(`Could not find order`)
 		}
 	};
 	
-	const getAllOrders = async () => {
-		const orderColl = db.collection('orders')
-		const orderCollSnap = await orderColl.get();
+	const getAllOrders = async (args: QueryAllOrdersArgs): Promise<OrdersConnection> => {
+		const ordersDoc = db.collection('orders')
+		const {slicedEdges, hasNextPage, hasPreviousPage} = await applyCursorToEdges(ordersDoc, args);
 		
-		return cleanDataTrans(orderTransform, orderCollSnap)
+		return paginateTransform(slicedEdges, hasNextPage, hasPreviousPage)
 	}
 	
 	const createOrder = async ({orderRequest}: MutationCreateOrderArgs) => {
 		const newDocRef = db.collection('orders').doc();
-		await newDocRef.set({...orderRequest})
+		await newDocRef.set({...orderRequest, createdAt: FieldValue.serverTimestamp()})
 		
 		const retrieveSavedDoc = await newDocRef.get()
 		const data = retrieveSavedDoc.data()
@@ -58,7 +62,7 @@ const OrdersService = (db: Firestore) => {
 			}
 		}
 		
-		await orderDocR.update({...updateObj})
+		await orderDocR.update({...updateObj, updatedAt: FieldValue.serverTimestamp()})
 		const retrieveSavedDoc = await orderDocR.get()
 		const updatedData = retrieveSavedDoc.data()
 		
