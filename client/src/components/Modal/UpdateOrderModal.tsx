@@ -1,28 +1,40 @@
 import React, { FormEvent, useState } from "react";
 import GET_ALL_ORDERS from "../../graphql/allOrdersQuery";
-import { useCreateOrderMutation } from "../../graphql/generated";
+import { OrderResponse, useUpdateOrderMutation } from "../../graphql/generated";
 import { useModalProvider } from "../../providers/ModalProvider";
+import { parseDate } from "../../utils/helpers";
 
-const CreateOrderModal = () => {
-	const [title, setTitle] = useState<string>("");
-	const [bookingDate, setBookingDate] = useState<string>("");
+interface IUpdateOrderModal {
+	order: Omit<OrderResponse, "__typename">;
+}
+
+const UpdateOrderModal = ({ order }: IUpdateOrderModal) => {
+	const [title, setTitle] = useState<string>(order.title || "");
+	const [bookingDate, setBookingDate] = useState<string>(
+		parseDate(order.bookingDate) || ""
+	);
 	const [address, setAddress] = useState({
-		street: "",
-		city: "",
-		country: "",
-		zip: "",
+		street: order.address?.street || "",
+		city: order.address?.city || "",
+		country: order.address?.country || "",
+		zip: order.address?.zip || "",
 	});
-	const [customer, setCustomer] = useState({ email: "", phone: "", name: "" });
-	const [createOrder, { error, loading }] = useCreateOrderMutation();
-	const { state, dispatch } = useModalProvider();
+	const [customer, setCustomer] = useState({
+		email: order.customer?.email || "",
+		phone: order.customer?.phone || "",
+		name: order.customer?.name || "",
+	});
+	const [updateOrder, { error, loading }] = useUpdateOrderMutation();
+	const { dispatch } = useModalProvider();
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		createOrder({
+		updateOrder({
 			variables: {
+				updateOrderId: order.uid,
 				orderRequest: {
 					title,
-					bookingDate: new Date(bookingDate).getTime(),
+					bookingDate: bookingDate ? new Date(bookingDate).getTime() : null,
 					address,
 					customer,
 				},
@@ -30,24 +42,18 @@ const CreateOrderModal = () => {
 			refetchQueries: [{ query: GET_ALL_ORDERS, variables: { first: 10 } }],
 		})
 			.then((resp) => {
-				setTitle("");
-				setBookingDate("");
-				setCustomer({ email: "", phone: "", name: "" });
-				setAddress({ street: "", city: "", country: "", zip: "" });
-
 				dispatch({ open: false, type: "create" });
 			})
 			.catch((e) => {
 				console.error("Problem creating order", e);
 			});
 	};
-
 	return (
 		<>
 			<div className="modal-content is-large">
 				<form className="box" onSubmit={handleSubmit}>
 					<h3 className="subtitle has-text-centered has-text-weight-bold">
-						Create order
+						Update order
 					</h3>
 
 					<div className="field">
@@ -228,4 +234,4 @@ const CreateOrderModal = () => {
 	);
 };
 
-export default CreateOrderModal;
+export default UpdateOrderModal;

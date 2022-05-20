@@ -1,26 +1,39 @@
-import React, {createContext,  useContext, useState} from 'react';
+import React, { createContext, useContext, useState } from "react";
+import { OrderResponse } from "../graphql/generated";
 
 interface IModalContext {
-    state: boolean,
-    dispatch: (args: boolean) => void
+	state: IModalState;
+	dispatch: (args: IModalState) => void;
+}
+
+interface IModalState {
+	open: boolean;
+	type: "create" | "edit" | "view";
+	order?: Omit<OrderResponse, "__typename">;
 }
 
 const ModalContext = createContext<IModalContext>({
-	state: false,
-    dispatch: (status: boolean) => false
+	state: {open: false, type: "create"},
+	dispatch: (args) => false,
 });
 
-const ModalProvider = ({children}:{ children: React.ReactNode}) => {
-	const [modalStatus, setModalStatus] = useState<boolean>(false);
+const ModalProvider = ({children}: { children: React.ReactNode }) => {
+	const [modalStatus, setModalStatus] = useState<IModalState>({
+		open: false,
+		type: "create",
+	});
 	
 	return (
 		<ModalContext.Provider
-			value={{state: modalStatus, dispatch: setModalStatus}}
+			value={{
+				state: modalStatus,
+				dispatch: setModalStatus,
+			}}
 		>
 			{children}
 		</ModalContext.Provider>
 	);
 };
 
-export const useModalProvider = () => useContext(ModalContext)
+export const useModalProvider = () => useContext(ModalContext);
 export default ModalProvider;

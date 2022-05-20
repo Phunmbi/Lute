@@ -149,6 +149,14 @@ export type GetSingleOrderQueryVariables = Exact<{
 
 export type GetSingleOrderQuery = { __typename?: 'Query', order?: { __typename?: 'OrderResponse', title?: string | null, uid: string, bookingDate?: any | null, customer?: { __typename?: 'User', name?: string | null, email?: string | null, phone?: string | null } | null, address?: { __typename?: 'Address', city?: string | null, zip?: string | null, street?: string | null, country?: string | null } | null } | null };
 
+export type UpdateOrderMutationVariables = Exact<{
+  updateOrderId: Scalars['String'];
+  orderRequest: OrderRequestBody;
+}>;
+
+
+export type UpdateOrderMutation = { __typename?: 'Mutation', updateOrder: { __typename?: 'OrderResponse', title?: string | null, uid: string, customer?: { __typename?: 'User', email?: string | null, name?: string | null, phone?: string | null } | null, address?: { __typename?: 'Address', city?: string | null, country?: string | null, street?: string | null, zip?: string | null } | null } };
+
 
 export const GetAllOrderDocument = gql`
     query GetAllOrder($first: Int, $last: Int, $before: String, $after: String) {
@@ -306,3 +314,49 @@ export function useGetSingleOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetSingleOrderQueryHookResult = ReturnType<typeof useGetSingleOrderQuery>;
 export type GetSingleOrderLazyQueryHookResult = ReturnType<typeof useGetSingleOrderLazyQuery>;
 export type GetSingleOrderQueryResult = Apollo.QueryResult<GetSingleOrderQuery, GetSingleOrderQueryVariables>;
+export const UpdateOrderDocument = gql`
+    mutation updateOrder($updateOrderId: String!, $orderRequest: OrderRequestBody!) {
+  updateOrder(id: $updateOrderId, orderRequest: $orderRequest) {
+    title
+    customer {
+      email
+      name
+      phone
+    }
+    address {
+      city
+      country
+      street
+      zip
+    }
+    uid
+  }
+}
+    `;
+export type UpdateOrderMutationFn = Apollo.MutationFunction<UpdateOrderMutation, UpdateOrderMutationVariables>;
+
+/**
+ * __useUpdateOrderMutation__
+ *
+ * To run a mutation, you first call `useUpdateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOrderMutation, { data, loading, error }] = useUpdateOrderMutation({
+ *   variables: {
+ *      updateOrderId: // value for 'updateOrderId'
+ *      orderRequest: // value for 'orderRequest'
+ *   },
+ * });
+ */
+export function useUpdateOrderMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOrderMutation, UpdateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOrderMutation, UpdateOrderMutationVariables>(UpdateOrderDocument, options);
+      }
+export type UpdateOrderMutationHookResult = ReturnType<typeof useUpdateOrderMutation>;
+export type UpdateOrderMutationResult = Apollo.MutationResult<UpdateOrderMutation>;
+export type UpdateOrderMutationOptions = Apollo.BaseMutationOptions<UpdateOrderMutation, UpdateOrderMutationVariables>;
