@@ -11,7 +11,6 @@ const authMiddleware = async (token: string) => {
 	} catch (e) {
 		throw new AuthenticationError("Error verifying Id")
 	}
-	
 }
 
 export default authMiddleware

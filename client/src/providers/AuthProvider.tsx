@@ -8,7 +8,7 @@ const AuthContext = createContext<ICurrentUser>({
 	isLoggedIn: false
 });
 
-const AuthProvider = ({children}: any) => {
+const AuthProvider = ({children}: { children: React.ReactNode}) => {
 	const [currentUser, setCurrentUser] = useState<ICurrentUser>({isLoggedIn: false});
 	const navigate = useNavigate()
 	

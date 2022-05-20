@@ -135,6 +135,13 @@ export type GetAllOrderQueryVariables = Exact<{
 
 export type GetAllOrderQuery = { __typename?: 'Query', allOrders?: { __typename?: 'OrdersConnection', totalCount?: number | null, pageInfo?: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string, endCursor: string } | null, edges?: Array<{ __typename?: 'Edge', cursor?: string | null, node?: { __typename?: 'OrderResponse', title?: string | null, bookingDate?: any | null, uid: string, customer?: { __typename?: 'User', name?: string | null, email?: string | null, phone?: string | null } | null, address?: { __typename?: 'Address', city?: string | null, country?: string | null, street?: string | null, zip?: string | null } | null } | null } | null> | null } | null };
 
+export type CreateOrderMutationVariables = Exact<{
+  orderRequest: OrderRequestBody;
+}>;
+
+
+export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'OrderResponse', title?: string | null, uid: string, customer?: { __typename?: 'User', email?: string | null, name?: string | null, phone?: string | null } | null, address?: { __typename?: 'Address', city?: string | null, country?: string | null, street?: string | null, zip?: string | null } | null } };
+
 export type GetSingleOrderQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -206,6 +213,51 @@ export function useGetAllOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetAllOrderQueryHookResult = ReturnType<typeof useGetAllOrderQuery>;
 export type GetAllOrderLazyQueryHookResult = ReturnType<typeof useGetAllOrderLazyQuery>;
 export type GetAllOrderQueryResult = Apollo.QueryResult<GetAllOrderQuery, GetAllOrderQueryVariables>;
+export const CreateOrderDocument = gql`
+    mutation createOrder($orderRequest: OrderRequestBody!) {
+  createOrder(orderRequest: $orderRequest) {
+    title
+    customer {
+      email
+      name
+      phone
+    }
+    address {
+      city
+      country
+      street
+      zip
+    }
+    uid
+  }
+}
+    `;
+export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
+
+/**
+ * __useCreateOrderMutation__
+ *
+ * To run a mutation, you first call `useCreateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOrderMutation, { data, loading, error }] = useCreateOrderMutation({
+ *   variables: {
+ *      orderRequest: // value for 'orderRequest'
+ *   },
+ * });
+ */
+export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
+      }
+export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
+export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
+export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
 export const GetSingleOrderDocument = gql`
     query GetSingleOrder($id: String!) {
   order(id: $id) {

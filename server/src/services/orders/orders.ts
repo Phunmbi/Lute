@@ -7,10 +7,11 @@ import {
 	QueryAllOrdersArgs,
 	QueryOrderArgs
 } from '../../graphql/code_generated';
-import {orderTransform, paginateTransform} from "../../transform/orderTransform";
-import {applyCursorToEdges} from "./ordersHelpers";
+import {orderTransform} from "../../transform/orderTransform";
+import { applyCursorToEdges } from './ordersHelpers';
 import Firestore = firestore.Firestore;
 import FieldValue = firestore.FieldValue;
+import { paginateTransform } from '../../transform/orderTransform';
 
 
 const OrdersService = (db: Firestore) => {
@@ -26,7 +27,7 @@ const OrdersService = (db: Firestore) => {
 	};
 	
 	const getAllOrders = async (args: QueryAllOrdersArgs): Promise<OrdersConnection> => {
-		const ordersDoc = db.collection('orders')
+		const ordersDoc = db.collection('orders').orderBy('createdAt', 'desc')
 		const {slicedEdges, hasNextPage, hasPreviousPage} = await applyCursorToEdges(ordersDoc, args);
 		
 		return paginateTransform(slicedEdges, hasNextPage, hasPreviousPage)
@@ -34,6 +35,8 @@ const OrdersService = (db: Firestore) => {
 	
 	const createOrder = async ({orderRequest}: MutationCreateOrderArgs) => {
 		const newDocRef = db.collection('orders').doc();
+
+		// add createdAt field, later used in sorting orders table
 		await newDocRef.set({...orderRequest, createdAt: FieldValue.serverTimestamp()})
 		
 		const retrieveSavedDoc = await newDocRef.get()

@@ -1,16 +1,22 @@
 import React from 'react';
+import { useModalProvider } from '../providers/ModalProvider';
 import Dashboard from './Dashboard';
+import CreateOrderModal from './Modal/CreateOrderModal';
 
 function Main() {
+	const {dispatch} = useModalProvider()
+	
 	return (
 		<>
-			<div>
-				<div>
-					<h3>Orders History</h3>
-					<button type="button">Create Orders</button>
+			<div className="section">
+				<h2 className='title'>Lute</h2>
+				<div className="is-flex is-justify-content-space-between">
+					<h3 className='subtitle'>Orders History</h3>
+					<button className='button is-success' type="button" onClick={() => dispatch(true)}>Create Orders</button>
 				</div>
-				<Dashboard/>
+				<CreateOrderModal />
 			</div>
+			<Dashboard/>
 		</>
 	);
 }

@@ -6,6 +6,7 @@ import 'firebaseui/dist/firebaseui.css';
 import ErrorFallback from "./components/ErrorBoundary";
 import Login from "./components/Login";
 import AuthProvider from "./providers/AuthProvider";
+import ModalProvider from './providers/ModalProvider';
 
 function App() {
 	return (
@@ -17,10 +18,12 @@ function App() {
 		>
 			<Router>
 				<AuthProvider>
-					<Routes>
-						<Route path="/" element={<Layout/>}/>
-						<Route path="/login" element={<Login/>}/>
-					</Routes>
+					<ModalProvider>
+						<Routes>
+							<Route path="/" element={<Layout/>}/>
+							<Route path="/login" element={<Login/>}/>
+						</Routes>
+					</ModalProvider>
 				</AuthProvider>
 			</Router>
 		</ErrorBoundary>

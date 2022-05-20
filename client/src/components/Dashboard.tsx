@@ -1,5 +1,6 @@
 import React from 'react';
 import {GetAllOrderQueryHookResult, useGetAllOrderQuery} from '../graphql/generated';
+import EditButton from './Buttons/EditButton';
 
 const Dashboard = () => {
 	const {
@@ -26,16 +27,17 @@ const Dashboard = () => {
 	}
 	
 	return (
-		<>
+		<div className='section'>
 			{error && <p>Error loading order</p>}
 			{loading && <p>...Loading</p>}
-			<table>
+			<table className='table is-striped is-bordered is-narrow is-hoverable is-fullwidth'>
 				<thead>
 				<tr>
 					<th>Title</th>
-					<th>Customer</th>
+					<th>Customer Name</th>
 					<th>Address</th>
 					<th>Booking Date</th>
+					<th>Manage Orders</th>
 				</tr>
 				</thead>
 				{data?.allOrders?.edges?.map((edge) => {
@@ -48,14 +50,15 @@ const Dashboard = () => {
 							<th>{singleOrder?.customer?.name}</th>
 							<th>{singleOrder?.address?.country}</th>
 							<th>{parsedDate.toDateString()}</th>
+							<th><EditButton /></th>
 						</tr>
 						</tbody>)
 				})}
 			</table>
-			<div>
-				<button type="button" disabled={!pageInfo?.hasNextPage} onClick={() => handleNext()}>Load more</button>
+			<div className='is-flex is-justify-content-center'>
+				<button  className='button is-link' type="button" disabled={!pageInfo?.hasNextPage} onClick={() => handleNext()}>Load more</button>
 			</div>
-		</>
+		</div>
 	);
 }
 

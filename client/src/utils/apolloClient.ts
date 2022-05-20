@@ -17,24 +17,26 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 	return forward(operation);
 })
 
-const logoutLink = onError(({networkError}) => {
-	// @ts-ignore
-	if (networkError.statusCode === 401) {
-		firebaseApp.auth().signOut().then(() => client.clearStore()).catch(e => console.log(e))
-	}
-})
+// const logoutLink = onError(({graphQLErrors}) => {
+// 	// @ts-ignore
+// 	console.log(graphQLErrors, '+++', graphQLErrors[0].extensions)
+// 	// @ts-ignore
+// 	if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
+// 		console.log('unauthenticated redirecting to login')
+// 	}
+// })
 
 const client = new ApolloClient({
 	cache: new InMemoryCache({
-		typePolicies: {
-			Query: {
-				fields: {
-					allOrders: relayStylePagination()
-				}
-			}
-		}
+		// typePolicies: {
+		// 	Query: {
+		// 		fields: {
+		// 			allOrders: relayStylePagination()
+		// 		}
+		// 	}
+		// }
 	}),
-	link: concat(authMiddleware, logoutLink.concat(httpLink))
+	link: concat(authMiddleware, httpLink)
 });
 
 export default client
