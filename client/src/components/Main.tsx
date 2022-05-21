@@ -9,9 +9,13 @@ function Main() {
 	return (
 		<>
 			<div className="section">
-				<h2 className="title">Lute</h2>
+				<h2 className="title is-1 has-text-centered is-family-code has-text-weight-light">
+					Lute
+				</h2>
 				<div className="is-flex is-justify-content-space-between">
-					<h3 className="subtitle">Orders History</h3>
+					<h3 className="subtitle is-family-code is-capitalized">
+						Unorganized orders history
+					</h3>
 					<button
 						className="button is-success"
 						type="button"
@@ -21,8 +25,8 @@ function Main() {
 					</button>
 				</div>
 				<BaseModal />
+				<Dashboard />
 			</div>
-			<Dashboard />
 		</>
 	);
 }

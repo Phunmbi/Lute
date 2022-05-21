@@ -3,35 +3,51 @@ import {
 	GetAllOrderQueryHookResult,
 	useGetAllOrderQuery,
 } from "../graphql/generated";
-import EditButton from "./Buttons/EditButton";
+import ActionButton from "./ActionButton";
+import { useGlobalProvider } from "../providers/GlobalProvider";
 
 const Dashboard = () => {
+	const {
+		state: { count },
+		dispatch,
+	} = useGlobalProvider();
+
 	const { loading, error, data, fetchMore }: GetAllOrderQueryHookResult =
 		useGetAllOrderQuery({
 			variables: {
-				first: 20,
+				first: count,
 			},
 			notifyOnNetworkStatusChange: true,
 		});
-
 	const pageInfo = data?.allOrders?.pageInfo;
 
 	const handleNext = () => {
 		void fetchMore({
 			variables: {
-				first: 20,
+				first: count,
 				after: pageInfo?.endCursor,
 			},
 		});
 	};
 
+	const handleCountChange = (newCount: number) => {
+		console.log(newCount, "_)))");
+		dispatch({ count: newCount });
+		void fetchMore({
+			variables: {
+				first: newCount,
+			},
+		});
+	};
+
 	return (
-		<div className="section">
+		<div className="mt-5">
 			{error && <p>Error loading order</p>}
 			{loading && <p>...Loading</p>}
 			<table className="table is-striped is-bordered is-narrow is-hoverable is-fullwidth">
 				<thead>
 					<tr>
+						<th>No.</th>
 						<th>Title</th>
 						<th>Customer Name</th>
 						<th>Address</th>
@@ -39,25 +55,49 @@ const Dashboard = () => {
 						<th>Manage Orders</th>
 					</tr>
 				</thead>
-				{data?.allOrders?.edges?.map((edge) => {
+				{data?.allOrders?.edges?.map((edge, index) => {
 					const singleOrder = edge?.node;
 					const parsedDate = new Date(singleOrder?.bookingDate);
 					return (
 						<tbody key={singleOrder?.uid}>
 							<tr>
+								<th>{index + 1}</th>
 								<th>{singleOrder?.title}</th>
 								<th>{singleOrder?.customer?.name}</th>
 								<th>{singleOrder?.address?.country}</th>
 								<th>{parsedDate.toDateString()}</th>
 								<th>
-									<EditButton order={singleOrder} />
+									<ActionButton
+										buttonClass="is-warning"
+										buttonType="edit"
+										order={singleOrder}
+									/>
+									<ActionButton
+										order={singleOrder}
+										buttonClass="ml-4 button is-info"
+										buttonType="view"
+									/>
+									<button className="ml-4 button is-danger">Delete</button>
 								</th>
 							</tr>
 						</tbody>
 					);
 				})}
 			</table>
-			<div className="is-flex is-justify-content-center">
+			<div className="is-flex column pl-0 pr-0 is-justify-content-space-between">
+				<div className="select is-info">
+					<select
+						onChange={(e) =>
+							handleCountChange(parseInt(e.currentTarget.value, 10))
+						}
+					>
+						<option>10</option>
+						<option>25</option>
+						<option>50</option>
+						<option>100</option>
+					</select>
+				</div>
+
 				<button
 					className="button is-link"
 					type="button"

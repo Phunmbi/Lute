@@ -2,8 +2,12 @@ import React, { FormEvent, useState } from "react";
 import GET_ALL_ORDERS from "../../graphql/allOrdersQuery";
 import { useCreateOrderMutation } from "../../graphql/generated";
 import { useModalProvider } from "../../providers/ModalProvider";
+import { useGlobalProvider } from "../../providers/GlobalProvider";
 
 const CreateOrderModal = () => {
+	const {
+		state: { count },
+	} = useGlobalProvider();
 	const [title, setTitle] = useState<string>("");
 	const [bookingDate, setBookingDate] = useState<string>("");
 	const [address, setAddress] = useState({
@@ -27,7 +31,7 @@ const CreateOrderModal = () => {
 					customer,
 				},
 			},
-			refetchQueries: [{ query: GET_ALL_ORDERS, variables: { first: 10 } }],
+			refetchQueries: [{ query: GET_ALL_ORDERS, variables: { first: count } }],
 		})
 			.then((resp) => {
 				setTitle("");

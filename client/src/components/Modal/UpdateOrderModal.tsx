@@ -3,12 +3,16 @@ import GET_ALL_ORDERS from "../../graphql/allOrdersQuery";
 import { OrderResponse, useUpdateOrderMutation } from "../../graphql/generated";
 import { useModalProvider } from "../../providers/ModalProvider";
 import { parseDate } from "../../utils/helpers";
+import { useGlobalProvider } from "../../providers/GlobalProvider";
 
-interface IUpdateOrderModal {
+export interface IUpdateOrderModal {
 	order: Omit<OrderResponse, "__typename">;
 }
 
 const UpdateOrderModal = ({ order }: IUpdateOrderModal) => {
+	const {
+		state: { count },
+	} = useGlobalProvider();
 	const [title, setTitle] = useState<string>(order.title || "");
 	const [bookingDate, setBookingDate] = useState<string>(
 		parseDate(order.bookingDate) || ""
@@ -39,7 +43,7 @@ const UpdateOrderModal = ({ order }: IUpdateOrderModal) => {
 					customer,
 				},
 			},
-			refetchQueries: [{ query: GET_ALL_ORDERS, variables: { first: 10 } }],
+			refetchQueries: [{ query: GET_ALL_ORDERS, variables: { first: count } }],
 		})
 			.then((resp) => {
 				dispatch({ open: false, type: "create" });

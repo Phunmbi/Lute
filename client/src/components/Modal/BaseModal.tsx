@@ -2,6 +2,7 @@ import React from "react";
 import UpdateOrderModal from "./UpdateOrderModal";
 import CreateOrderModal from "./CreateOrderModal";
 import { useModalProvider } from "../../providers/ModalProvider";
+import ViewOrderDetailsModal from "./ViewOrderDetailsModal";
 
 const BaseModal = () => {
 	const {
@@ -16,7 +17,7 @@ const BaseModal = () => {
 			case "edit":
 				return <UpdateOrderModal order={order} />;
 			case "view":
-				return;
+				return <ViewOrderDetailsModal order={order} />;
 			default:
 				return;
 		}
