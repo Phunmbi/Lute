@@ -6,6 +6,7 @@ import Firestore = firestore.Firestore;
 
 export interface ResolverContext {
 	db: Firestore
+	user: { uid: string }
 }
 
 const resolvers: Resolvers<ResolverContext> = {

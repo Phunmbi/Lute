@@ -1,14 +1,14 @@
-import {QueryOrderArgs, QueryResolvers} from '../code_generated';
-import OrdersService from '../../services/orders';
+import {QueryResolvers} from '../code_generated';
+import OrdersService from '../../services/orders/orders';
 import {ResolverContext} from '../../resolvers';
 
 const queryOrderResolver: QueryResolvers<ResolverContext> = {
-	order: async (_, args: QueryOrderArgs, context: ResolverContext) => {
-		return OrdersService(context.db).getOrder(args)
+	order: (_, args, ctx: ResolverContext) => {
+		return OrdersService(ctx.db).getOrder(args)
 	},
 	
-	allOrders: async (_, __, context: ResolverContext) => {
-		return OrdersService(context.db).getAllOrders()
+	allOrders: async (_, args, ctx: ResolverContext) => {
+		return OrdersService(ctx.db).getAllOrders(args)
 	}
 };
 
