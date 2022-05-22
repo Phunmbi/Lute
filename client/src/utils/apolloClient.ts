@@ -1,24 +1,16 @@
-import {
-	ApolloClient,
-	ApolloLink,
-	concat,
-	HttpLink,
-	InMemoryCache,
-} from "@apollo/client";
+import { ApolloClient, concat, HttpLink, InMemoryCache } from "@apollo/client";
 import { relayStylePagination } from "@apollo/client/utilities";
+import { setContext } from "@apollo/client/link/context";
 
 const httpLink = new HttpLink({ uri: process.env.APOLLO_CLIENT_URI });
-const token = localStorage.getItem("luteToken") || "";
-const authMiddleware = new ApolloLink((operation, forward) => {
-	// add the authorization to the headers
-	operation.setContext(({ headers = {} }) => ({
+
+const authMiddleware = setContext((_, { headers }) => {
+	return {
 		headers: {
 			...headers,
-			authorization: `Bearer ${token}`,
+			authorization: `Bearer ${localStorage.getItem("luteToken") as string}`,
 		},
-	}));
-
-	return forward(operation);
+	};
 });
 
 const client = new ApolloClient({

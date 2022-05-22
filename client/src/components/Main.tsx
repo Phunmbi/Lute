@@ -3,18 +3,16 @@ import { useModalProvider } from "../providers/ModalProvider";
 import Dashboard from "./Dashboard";
 import BaseModal from "./Modal/BaseModal";
 
-function Main() {
+const Main = () => {
 	const { dispatch } = useModalProvider();
 
 	return (
 		<>
-			<div className="section">
-				<h2 className="title is-1 has-text-centered is-family-code has-text-weight-light">
-					Lute
-				</h2>
-				<div className="is-flex is-justify-content-space-between">
-					<h3 className="subtitle is-family-code is-capitalized">
-						Unorganized orders history
+			<div className="container">
+				<div className="" />
+				<div className="mt-6 is-flex is-justify-content-space-between is-align-items-center">
+					<h3 className="subtitle is-5 is-capitalized mb-0 has-text-weight-bold">
+						Orders history
 					</h3>
 					<button
 						className="button is-success"
@@ -29,6 +27,6 @@ function Main() {
 			</div>
 		</>
 	);
-}
+};
 
 export default Main;
