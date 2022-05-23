@@ -19,7 +19,8 @@
     "dev": "yarn concurrently 'yarn:dev-server' 'yarn:start-client'",
     "test-start": "yarn concurrently 'yarn:dev-server' 'yarn:dev-client'",
     "start-server": "cd server && yarn start",
-    "start": "yarn concurrently yarn:start-server yarn:start-client "
+    "start": "yarn concurrently yarn:start-server yarn:start-client",
+    "cypress:test": "cd client && yarn cypress:coverage"
   },
   "workspaces": [
     "client",
