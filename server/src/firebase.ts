@@ -3,7 +3,6 @@ import App = app.App;
 
 let firebase: App;
 
-console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "test") {
 	firebase = admin.initializeApp({
 		credential: admin.credential.cert({
