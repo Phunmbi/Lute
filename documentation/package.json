@@ -1,0 +1,13 @@
+{
+  "name": "documentation",
+  "version": "0.0.1",
+  "description": "Lute's Static GraphQL API Documentation",
+  "repository": "https://github.com/Phunmbi/Lute.git",
+  "author": "Adeniyi Adeyokunnu <funmbi.adeyokunnu@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  }
+}

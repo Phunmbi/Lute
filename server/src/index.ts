@@ -1,20 +1,25 @@
-import express from 'express';
-import {createServer} from 'http'
-import {createApolloServer} from "./apollo-server";
+import express, { Express } from "express";
+import { createServer } from "http";
+import createApolloServer from "./apollo-server";
+import { db } from "./firebase";
 
-const app = express();
+const app: Express = express();
+const port = 4000 || process.env.PORT;
 
 async function start() {
-	const httpServer = createServer(app)
-	const apolloServer = await createApolloServer("",httpServer, app)
-	
-	app.listen('4000', () => {
-		console.log('GraphQL API Server listening on 4000')
-		console.log(`sandbox: http://localhost:4000${apolloServer.graphqlPath}`)
-	})
+	const httpServer = createServer(app);
+	const apolloServer = await createApolloServer(db, httpServer, app);
+
+	app.listen(port, () => {
+		console.log(`GraphQL API Server listening on ${port}`);
+		console.log(`sandbox: http://localhost:${port}${apolloServer.graphqlPath}`);
+	});
 }
 
-start().catch(e => {
-	console.error(e)
-})
+start().catch((e) => {
+	console.error(e);
+});
 
+app.get("/health", (req, res) => {
+	return res.status(200).send({ message: "lute graphql server is healthy" });
+});

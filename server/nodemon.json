@@ -1,9 +1,3 @@
 {
-  "verbose": true,
-  "ignore": ["src"],
-  "execMap": {
-    "js": "node"
-  },
-  "watch": ["dist", "../order.graphql"],
-  "ext": "ts,js,json"
+  "exec": "ts-node ./src/index.ts"
 }

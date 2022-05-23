@@ -21,6 +21,8 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 *.lcov
+/server/coverage
+/client/instrumented
 
 # nyc test coverage
 .nyc_output
@@ -83,10 +85,12 @@ typings/
 # Nuxt.js build / generate output
 .nuxt
 dist
-./server/dist
+/server/build
 
 # Gatsby files
 .cache/
+.parcel-cache
+client/dist
 # Comment in the public line in if your project uses Gatsby and *not* Next.js
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
@@ -107,3 +111,4 @@ dist
 .tern-port
 
 .idea
+/serviceAccountKey.json

@@ -1,0 +1,6 @@
+{
+  "fixturesFolder": false,
+  "screenshotOnRunFailure": false,
+  "defaultCommandTimeout": 10000,
+  "viewportWidth": 1024
+}
