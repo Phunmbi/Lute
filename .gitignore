@@ -112,3 +112,4 @@ client/dist
 
 .idea
 /serviceAccountKey.json
+/server/serviceAccountKey.json
