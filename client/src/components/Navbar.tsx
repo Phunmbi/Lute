@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 const Navbar = () => {
 	const { isLoggedIn, email, fullName } = useAuthProvider();
 	const [loading, setLoading] = useState<boolean>(false);
+	const [hamburgerActive, setHamburgerActive] = useState<boolean>(false);
 
 	const logout = () => {
 		setLoading(true);
@@ -53,9 +54,10 @@ const Navbar = () => {
 				</a>
 				<a
 					role="button"
-					className="navbar-burger"
 					aria-label="menu"
-					aria-expanded="false"
+					className={`${hamburgerActive ? "is-active " : ""} navbar-burger`}
+					aria-expanded={hamburgerActive}
+					onClick={() => setHamburgerActive(!hamburgerActive)}
 				>
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
@@ -63,7 +65,11 @@ const Navbar = () => {
 				</a>
 			</div>
 
-			<div className="navbar-menu is-justify-content-space-between">
+			<div
+				className={`${
+					hamburgerActive ? "is-active " : ""
+				} navbar-menu is-justify-content-space-between`}
+			>
 				<div className="navbar-end">
 					<div className="navbar-item  is-align-items-start">
 						{isLoggedIn ? (
@@ -73,7 +79,8 @@ const Navbar = () => {
 									<p>{email}</p>
 								</div>
 								<a
-									className={`${loading ? "is-loading " : ""} button is-light`}
+									id="cy-logout"
+									className={`${loading ? "is-loading " : ""} button is-danger`}
 									onClick={() => logout()}
 								>
 									Log out

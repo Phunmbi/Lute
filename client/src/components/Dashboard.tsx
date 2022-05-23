@@ -31,7 +31,6 @@ const Dashboard = () => {
 	};
 
 	const handleCountChange = (newCount: number) => {
-		console.log(newCount, "_)))");
 		dispatch({ count: newCount });
 		void fetchMore({
 			variables: {
@@ -84,9 +83,6 @@ const Dashboard = () => {
 											buttonClass="is-info is-small is-rounded"
 											buttonType="view"
 										/>
-										<button className="button is-danger is-small is-rounded">
-											Delete
-										</button>
 									</div>
 								</th>
 							</tr>

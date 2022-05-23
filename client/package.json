@@ -11,7 +11,7 @@
     "dev": "yarn cypress:instrument && parcel instrumented/index.html",
     "build": "parcel build src/index.html",
     "codegen": "graphql-codegen --config codegen.yml",
-    "cypress:instrument": "nyc instrument ./src ./instrumented",
+    "cypress:instrument": "nyc instrument --delete --complete-copy ./src ./instrumented ",
     "cypress:open": "nyc cypress open",
     "cypress:coverage": "nyc cypress run --headed"
   },
@@ -38,6 +38,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "firebaseui": "^6.0.1",
     "nyc": "^15.1.0",
+    "nyc-config-tsx": "^0.1.0",
     "parcel": "^2.5.0",
     "prettier": "2.6.2",
     "process": "^0.11.10",

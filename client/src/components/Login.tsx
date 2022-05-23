@@ -56,6 +56,7 @@ const Login = () => {
 						<label className="label">Email</label>
 						<div className="control">
 							<input
+								id="cy-login-input-email"
 								className="input"
 								type="email"
 								placeholder="Email"
@@ -69,6 +70,7 @@ const Login = () => {
 						<label className="label">Password</label>
 						<div className="control">
 							<input
+								id="cy-login-input-password"
 								className="input"
 								type="password"
 								placeholder="Password"
@@ -81,6 +83,7 @@ const Login = () => {
 					<div className="field">
 						<div className="control">
 							<button
+								id="cy-login-input-submit"
 								type="submit"
 								className={`${loading ? "is-loading " : ""} button is-primary`}
 							>

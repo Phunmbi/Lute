@@ -15,6 +15,7 @@ const Main = () => {
 						Orders history
 					</h3>
 					<button
+						id="cy-create-button"
 						className="button is-success"
 						type="button"
 						onClick={() => dispatch({ open: true, type: "create" })}

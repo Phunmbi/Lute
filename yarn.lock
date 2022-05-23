@@ -10232,6 +10232,13 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
+nyc-config-tsx@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/nyc-config-tsx/-/nyc-config-tsx-0.1.0.tgz#617aa0fb2cd6a3449210f2e0edb8945146c89c53"
+  integrity sha512-uYmVkZPc4O4DrwsERZyPvtqBwEVBlvgdiANUktBnOuIr1Gsghhm4QEiM8587n9byRM/B5e7K+fm5pFOIyJbktA==
+  dependencies:
+    "@istanbuljs/schema" "^0.1.2"
+
 nyc@15.1.0, nyc@^15.1.0:
   version "15.1.0"
   resolved "https://registry.yarnpkg.com/nyc/-/nyc-15.1.0.tgz#1335dae12ddc87b6e249d5a1994ca4bdaea75f02"

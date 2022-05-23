@@ -60,6 +60,7 @@ const CreateOrderModal = () => {
 							<div className="field">
 								<div className="control">
 									<input
+										id="cy-create-input-title"
 										className="input"
 										type="text"
 										placeholder="Title"
@@ -111,6 +112,7 @@ const CreateOrderModal = () => {
 							<div className="field">
 								<p className="control is-expanded">
 									<input
+										id="cy-create-input-address-country"
 										className="input"
 										type="text"
 										value={address.country}
@@ -146,6 +148,7 @@ const CreateOrderModal = () => {
 							<div className="field">
 								<p className="control is-expanded">
 									<input
+										id="cy-create-input-customer-name"
 										className="input"
 										type="text"
 										value={customer.name}
@@ -204,6 +207,7 @@ const CreateOrderModal = () => {
 							<div className="field">
 								<p className="control is-expanded">
 									<input
+										id="cy-create-input-bookingDate"
 										className="input"
 										type="date"
 										placeholder="Booking date"
@@ -219,6 +223,7 @@ const CreateOrderModal = () => {
 					<div className="field">
 						<div className="control is-flex is-justify-content-center">
 							<button
+								id="cy-create-input-submit"
 								className={`button is-link ${loading ? "is-loading" : ""}`}
 								type="submit"
 							>
