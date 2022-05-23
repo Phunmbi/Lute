@@ -25,7 +25,7 @@ jobs:
           start: yarn run test-start
           wait-on: 'http://localhost:1234'
           wait-on-timeout: 240
-          command: yarn cypress:coverage
+          command: yarn cypress:test
       - name: Test Reporting
         uses: paambaati/codeclimate-action@v2.7.5
         env:
