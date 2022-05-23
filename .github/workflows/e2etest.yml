@@ -41,3 +41,6 @@ jobs:
         uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: 15209625f8fdc65004f9124c0c8ea306cf5526f80d3fb79874f302684f06c0b2
+        with:
+          workingDirectory: './client'
+          debug: true
