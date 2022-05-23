@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ develop, main ]
+    branches: [ staging, main ]
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
