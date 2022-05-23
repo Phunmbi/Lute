@@ -31,7 +31,6 @@ const Dashboard = () => {
 	};
 
 	const handleCountChange = (newCount: number) => {
-		console.log(newCount, "_)))");
 		dispatch({ count: newCount });
 		void fetchMore({
 			variables: {
@@ -44,7 +43,7 @@ const Dashboard = () => {
 		<div className="mt-5">
 			{error && <p>Error loading order</p>}
 			{loading && <p>...Loading</p>}
-			<table className="table is-striped is-bordered is-narrow is-hoverable is-fullwidth">
+			<table className="table is-bordered is-striped is-fullwidth">
 				<thead>
 					<tr>
 						<th>No.</th>
@@ -61,23 +60,30 @@ const Dashboard = () => {
 					return (
 						<tbody key={singleOrder?.uid}>
 							<tr>
-								<th>{index + 1}</th>
-								<th>{singleOrder?.title}</th>
-								<th>{singleOrder?.customer?.name}</th>
-								<th>{singleOrder?.address?.country}</th>
-								<th>{parsedDate.toDateString()}</th>
+								<th className="has-text-weight-normal">{index + 1}</th>
+								<th className="has-text-weight-normal">{singleOrder?.title}</th>
+								<th className="has-text-weight-normal">
+									{singleOrder?.customer?.name}
+								</th>
+								<th className="has-text-weight-normal">
+									{singleOrder?.address?.country}
+								</th>
+								<th className="has-text-weight-normal">
+									{parsedDate.toDateString()}
+								</th>
 								<th>
-									<ActionButton
-										buttonClass="is-warning"
-										buttonType="edit"
-										order={singleOrder}
-									/>
-									<ActionButton
-										order={singleOrder}
-										buttonClass="ml-4 button is-info"
-										buttonType="view"
-									/>
-									<button className="ml-4 button is-danger">Delete</button>
+									<div className="buttons are-medium">
+										<ActionButton
+											buttonClass="is-warning is-small is-rounded"
+											buttonType="edit"
+											order={singleOrder}
+										/>
+										<ActionButton
+											order={singleOrder}
+											buttonClass="is-info is-small is-rounded"
+											buttonType="view"
+										/>
+									</div>
 								</th>
 							</tr>
 						</tbody>

@@ -8,8 +8,10 @@ import Login from "./components/Login";
 import AuthProvider from "./providers/AuthProvider";
 import ModalProvider from "./providers/ModalProvider";
 import GlobalProvider from "./providers/GlobalProvider";
+import Signup from "./components/Signup";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+const App = () => {
 	return (
 		<ErrorBoundary
 			FallbackComponent={ErrorFallback}
@@ -22,8 +24,12 @@ function App() {
 					<ModalProvider>
 						<GlobalProvider>
 							<Routes>
-								<Route path="/" element={<Layout />} />
+								<Route
+									path="/"
+									element={<ProtectedRoute children={<Layout />} />}
+								/>
 								<Route path="/login" element={<Login />} />
+								<Route path="/signup" element={<Signup />} />
 							</Routes>
 						</GlobalProvider>
 					</ModalProvider>
@@ -31,6 +37,6 @@ function App() {
 			</Router>
 		</ErrorBoundary>
 	);
-}
+};
 
 export default App;

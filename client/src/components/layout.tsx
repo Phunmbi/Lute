@@ -1,14 +1,15 @@
-import React from 'react';
-import Main from './Main';
-import 'firebaseui/dist/firebaseui.css'
+import React from "react";
+import Main from "./Main";
+import "firebaseui/dist/firebaseui.css";
+import Navbar from "./Navbar";
 
-function Layout() {
+const Layout = () => {
 	return (
-		<div className="container">
-			{/*<Sidebar/>*/}
-			<Main/>
+		<div>
+			<Navbar />
+			<Main />
 		</div>
 	);
-}
+};
 
 export default Layout;

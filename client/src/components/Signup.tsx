@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { firebaseApp } from "../utils/firebase";
 
-const Login = () => {
+const Signup = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
 		setLoading(true);
 		e.preventDefault();
 
 		firebaseApp
 			.auth()
-			.signInWithEmailAndPassword(email, password)
+			.createUserWithEmailAndPassword(email, password)
 			.then(() => {
 				setLoading(false);
 			})
-			.catch(() => {
+			.catch((e) => {
 				setLoading(false);
-				toast.error("Incorrect Email/Password", {
+				toast.error("Error signing up", {
 					theme: "colored",
 					position: "top-right",
 					autoClose: 4000,
@@ -47,21 +46,19 @@ const Login = () => {
 				draggable
 				pauseOnHover
 			/>
-
 			<div className="column is-one-third is-offset-4">
 				<h2 className="title is-3 is-family-code">Lute</h2>
-				<h3 className="subtitle">Login</h3>
-				<form onSubmit={(e) => handleLogin(e)} className="block">
+				<h3 className="subtitle">Private beta signup</h3>
+				<form onSubmit={(e) => handleSignup(e)} className="block">
 					<div className="field">
 						<label className="label">Email</label>
 						<div className="control">
 							<input
-								id="cy-login-input-email"
 								className="input"
 								type="email"
 								placeholder="Email"
-								value={email}
 								onChange={(e) => setEmail(e.currentTarget.value)}
+								value={email}
 								required
 							/>
 						</div>
@@ -70,7 +67,6 @@ const Login = () => {
 						<label className="label">Password</label>
 						<div className="control">
 							<input
-								id="cy-login-input-password"
 								className="input"
 								type="password"
 								placeholder="Password"
@@ -83,7 +79,6 @@ const Login = () => {
 					<div className="field">
 						<div className="control">
 							<button
-								id="cy-login-input-submit"
 								type="submit"
 								className={`${loading ? "is-loading " : ""} button is-primary`}
 							>
@@ -94,10 +89,10 @@ const Login = () => {
 				</form>
 			</div>
 			<h3 className="block">
-				<Link to="/signup">Sign up</Link>, if you don't have an account.
+				<Link to="/login">Login</Link>, if you already have an account.
 			</h3>
 		</div>
 	);
 };
 
-export default Login;
+export default Signup;
