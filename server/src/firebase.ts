@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "test") {
 		databaseURL: "https://construyo-coding-challenge.firebaseio.com",
 	});
 } else {
-	const serviceAccount = require("../../serviceAccountKey.json");
+	const serviceAccount = require("../serviceAccountKey.json");
 
 	firebase = admin.initializeApp({
 		credential: admin.credential.cert(serviceAccount as ServiceAccount),

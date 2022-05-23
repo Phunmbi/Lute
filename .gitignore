@@ -111,4 +111,4 @@ client/dist
 .tern-port
 
 .idea
-/serviceAccountKey.json
+/server/serviceAccountKey.json

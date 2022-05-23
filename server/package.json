@@ -31,7 +31,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "yarn tsc -p .",
-    "start": "node build/server/src/index.js",
+    "start": "node build/src/index.js",
     "codegen": "graphql-codegen --config codegen.yml",
     "emulators-init": "firebase init emulators",
     "emulators-start": "firebase emulators:start",
