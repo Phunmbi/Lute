@@ -1,13 +1,9 @@
-import admin, { firestore, ServiceAccount } from "firebase-admin";
-import serviceAccount from "../../serviceAccountKey.json";
+import admin, { app, firestore, ServiceAccount } from "firebase-admin";
+import App = app.App;
 
-let firebase = admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount as ServiceAccount),
-	databaseURL: "https://construyo-coding-challenge.firebaseio.com",
-});
+let firebase: App;
 
-export const db: firestore.Firestore = firestore();
-
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "GITHUB") {
 	firebase = admin.initializeApp({
 		credential: admin.credential.cert({
@@ -27,5 +23,14 @@ if (process.env.NODE_ENV === "GITHUB") {
 		} as ServiceAccount),
 		databaseURL: "https://construyo-coding-challenge.firebaseio.com",
 	});
+} else {
+	const serviceAccount = require("../../serviceAccountKey.json");
+
+	firebase = admin.initializeApp({
+		credential: admin.credential.cert(serviceAccount as ServiceAccount),
+		databaseURL: "https://construyo-coding-challenge.firebaseio.com",
+	});
 }
+
+export const db: firestore.Firestore = firestore();
 export default firebase;
