@@ -42,13 +42,13 @@ NB:
   From the root of the project
     - for server: `yarn run codegen-server`
     - for client: `yarn run codegen-client`
-  
+
 - The documentation folder houses static documentation files generated
-  with [SpectaQL](https://github.com/anvilco/spectaql). It is deployed [here](https://)
+  with [SpectaQL](https://github.com/anvilco/spectaql). It is deployed [here](https://lute-documentation.onrender.com)
 
 ## API Documentation
 
-Lute's Graphql API Documentation can be found [here](https://)
+Lute's Graphql API Documentation can be found [here](https://lute-documentation.onrender.com)
 
 ## Technologies
 
@@ -61,10 +61,11 @@ Lute's Graphql API Documentation can be found [here](https://)
 - [React](https://reactjs.org/)
 - [Bulma](https://bulma.io/) UI Kit
 - [Cypress](https://www.cypress.io/)
-- [Parcel](https://parceljs.org/)
+- [Parcel](https://parceljs.org/) Bundler
 - [Github Actions](https://github.com/features/actions) for CI/CD, integrated with code climate for test reporting
 - [Code Climate](https://codeclimate.com/) for maintainability and code coverage reporting
-- [Spectl](https://github.com/anvilco/spectaql) for documentation
+- [Spectl](https://github.com/anvilco/spectaql) for documentation.
+- [Render](https://render.com/) for deployments
 
 ## Testing
 
