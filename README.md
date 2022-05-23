@@ -20,7 +20,8 @@ With Lute, you are able to
 
 ## Development
 
-The Lute codebase is a monorepo managed with Yarn workspaces. The 2 workspaces being `client` and `server`.
+The Lute codebase is a monorepo managed with Yarn workspaces. The 3 workspaces being `client` ,`server`
+and `documentation`.
 
 To run the codebase locally, you'll need
 
@@ -35,11 +36,15 @@ To run the codebase locally, you'll need
 
 NB:
 
-- Both workspaces share the same `schema.graphql` file. separate Codegen commands generates types for each workspace.
+- The Server and Client workspaces share the same `schema.graphql` file. separate Codegen commands generates types for
+  each workspace.
   Should the `schema.graphql` be updated, Codegen will need to be run for both workspaces
   From the root of the project
     - for server: `yarn run codegen-server`
     - for client: `yarn run codegen-client`
+  
+- The documentation folder houses static documentation files generated
+  with [SpectaQL](https://github.com/anvilco/spectaql). It is deployed [here](https://)
 
 ## API Documentation
 

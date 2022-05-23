@@ -21,11 +21,13 @@
     "start-server": "cd server && yarn start",
     "start": "yarn concurrently yarn:start-server yarn:start-client",
     "cypress:test": "cd client && yarn cypress:coverage",
-    "cypress:test-dev": "cd client && yarn cypress:open"
+    "cypress:test-dev": "cd client && yarn cypress:open",
+    "launch:doc": "cd documentation && parcel index.html"
   },
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "documentation"
   ],
   "devDependencies": {
     "@parcel/transformer-sass": "2.5.0",
