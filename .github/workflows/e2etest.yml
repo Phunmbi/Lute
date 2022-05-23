@@ -8,7 +8,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-20.04
     env:
-      NODE_ENV: 'GITHUB'
+      NODE_ENV: 'test'
       APOLLO_CLIENT_URI: ${{ secrets.APOLLO_CLIENT_URI }}
       FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
       FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}

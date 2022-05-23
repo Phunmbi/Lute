@@ -4,7 +4,7 @@ import App = app.App;
 let firebase: App;
 
 console.log(process.env.NODE_ENV);
-if (process.env.NODE_ENV === "GITHUB") {
+if (process.env.NODE_ENV === "test") {
 	firebase = admin.initializeApp({
 		credential: admin.credential.cert({
 			type: process.env.FIREBASE_SERVICE_TYPE,
