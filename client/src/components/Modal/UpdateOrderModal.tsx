@@ -30,7 +30,6 @@ const UpdateOrderModal = ({ order }: IUpdateOrderModal) => {
 	});
 	const [updateOrder, { error, loading }] = useUpdateOrderMutation();
 	const { dispatch } = useModalProvider();
-
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		updateOrder({
